@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weekly Web Report"
+  short_description: "Configurable weekly dashboard reporting with Playwright."
+  default_prompt: "Use $weekly-web-report when the user asks to log into browser-only dashboards, collect last week's configured metrics, or return a chat-ready weekly summary."

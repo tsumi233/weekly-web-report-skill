@@ -1,0 +1,51 @@
+{
+  "replaceBuiltin": true,
+  "timezone": "Asia/Shanghai",
+  "systems": {
+    "demo": {
+      "adapter": "generic-form",
+      "dashboardUrl": "https://dashboard.example.com/overview",
+      "loginUrl": "https://dashboard.example.com/login",
+      "usernameEnv": "REPORT_USERNAME",
+      "passwordEnv": "REPORT_PASSWORD",
+      "loggedOutUrlIncludes": ["/login"],
+      "loginSelectors": {
+        "username": "input[name=email]",
+        "password": "input[name=password]",
+        "submitText": "Sign in"
+      },
+      "presetTextEnv": "REPORT_DATE_PRESET_TEXT"
+    }
+  },
+  "pages": {
+    "overview": {
+      "system": "demo",
+      "url": "https://dashboard.example.com/overview",
+      "collector": "labelMetrics",
+      "contextLabel": "overview",
+      "metrics": [
+        { "key": "orders", "label": "Orders", "type": "count" },
+        { "key": "conversionRate", "label": "Conversion Rate", "type": "rate" }
+      ]
+    },
+    "engagement": {
+      "system": "demo",
+      "url": "https://dashboard.example.com/engagement",
+      "collector": "dimensionSingleValue",
+      "contextLabel": "engagement",
+      "dimensions": [
+        { "toggle": "Count", "key": "activeCount", "label": "Active Count" },
+        { "toggle": "Users", "key": "activeUsers", "label": "Active Users" }
+      ]
+    }
+  },
+  "collectOrder": ["overview", "engagement"],
+  "output": {
+    "titleTemplate": "Weekly report ({weekRange.label})",
+    "lines": [
+      { "template": "Orders: {metrics.demo.orders|or:n/a}" },
+      { "template": "Conversion rate: {metrics.demo.conversionRate|or:n/a}" },
+      { "template": "Engagement: count {metrics.demo.activeCount|or:n/a} / users {metrics.demo.activeUsers|or:n/a}" }
+    ]
+  }
+}
